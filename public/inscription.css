@@ -85,7 +85,7 @@
 }
 
 /* Style responsive */
-@media (max-width: 480px) {
+@media (max-width: 600px) {
     .boxe-login {
         padding: 20px;
         margin: 10%;
