@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panier</title>
+    <link rel="stylesheet" href="./styles.css">
+    <link rel="stylesheet" href="./accueil.css">
+    <link rel="stylesheet" href="./navbar.css">
+</head>
+<body>
+    <%- include('header') %>
+    <h1>Votre panier</h1>
+    <% if (cart.length > 0) { %>
+        <ul>
+            <% cart.forEach(item => { %>
+                
+                <li> <%= item.quantity %> - Spiruline, 200 comprimés - <%= item.total_price %>€</li>
+            
+        </ul>
+        <form action="/success?userId=<%= item.user_id %>" id="panier" method="post">
+            <button type="submit">Valider la commande</button>
+        </form><% }) %>
+    <% } else { %>
+        <p>Votre panier est vide.</p>
+    <% } %>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+      const hidenid = document.getElementById('hidenid').innerHTML;
+      const userId = hidenid ;
+      document.getElementById("hidenid").style.display = "none"
+      const userLinkaccueil = document.getElementById('accueil');
+      userLinkaccueil.href = `/accueil?userId=${encodeURIComponent(userId)}`;
+      const userLinkproduis = document.getElementById('produis');
+      userLinkproduis.href = `/produis?userId=${encodeURIComponent(userId)}`;
+      const userLinkhistory = document.getElementById('history');
+      userLinkhistory.href = `/history?userId=${encodeURIComponent(userId)}`;
+      const userLinkpanier = document.getElementById('panier');
+      userLinkpanier.href = `/panier?userId=${encodeURIComponent(userId)}`;
+    });
+    </script>
+</body>
+</html>

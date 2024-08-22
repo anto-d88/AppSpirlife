@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My-Ecommerce</title>
+
+    <link rel="stylesheet" href="./accueil.css">
+    <link rel="stylesheet" href="./navbar.css">
+</head>
+<body>
+    <%- include('header') %>
+  <main>
+    <section class="contenaire">
+      <section class="description">
+        <h2>Description du produit</h2>
+        <p>Découvrez notre paquet de 200 comprimés de spiruline, un super-aliment riche en nutriments essentiels pour votre santé quotidienne. La spiruline est une algue bleue-verte reconnue pour ses nombreux bienfaits, notamment sa capacité à renforcer le système immunitaire, améliorer l'énergie et soutenir la santé générale.</p>
+        <h2>Bienfaits de la Spiruline</h2>
+        <ul class="benefits-list">
+            <li>Riche en protéines et en acides aminés essentiels</li>
+            <li>Renforce le système immunitaire</li>
+            <li>Améliore l'énergie et la vitalité</li>
+            <li>Soutient la santé cardiovasculaire</li>
+            <li>Détoxifie le corps des métaux lourds et des toxines</li>
+            <li>Aide à la gestion du poids</li>
+            <li>Riche en antioxydants pour combattre le stress oxydatif</li>
+        </ul>
+        <h2>Mode d'emploi</h2>
+        <p>Prendre 4 à 6 comprimés par jour avec un grand verre d'eau, de préférence pendant les repas.</p>
+        <h2>Ingrédients</h2>
+        <p>100% Spiruline biologique pure, sans additifs ni conservateurs.</p>
+        <h2>Avis des clients</h2>
+        <p>"Depuis que je prends de la spiruline, je me sens beaucoup plus énergique et ma digestion s'est améliorée." - Marie</p>
+        <p>"Un complément indispensable pour une alimentation équilibrée. Je recommande vivement!" - Pierre</p>
+        <h2>Prix</h2>
+        <p><strong>Prix: <%= products[0].price %>€</strong></p>
+        <form class="add-to-cart-form" data-product-id="<%= products[0].id %>" data-product-price="<%= products[0].price %>">
+          <label for="quantity-<%= products[0].id %>">Quantité:</label>
+          <input type="number" id="quantity-<%= products[0].id %>" name="quantity" min="1" value="1">
+          <button type="submit">Ajouter au Panier</button>
+      </form>
+      <p class="status-message" id="status-<%= products[0].id %>"></p>
+       <!-- <button onclick="addToCart(<%= products[0].id %>)" id="btnajout" style="padding: 10px 20px; background: #e8491d; color: #ffffff; border: none; cursor: pointer;">Ajouter au Panier</button>
+      --></section>
+      <section class="imgproduis">
+      
+      </section>
+    </section>
+
+   <!-- <section>
+      <h2>Panier</h2>
+      <div id="cart">
+      </div>
+      <button onclick="deletarticl(<%= products[0].id %>)" id="deletarticl" style="display: none;"  >retirer un article</button>
+      
+      <a href="/success"><button onclick="placeOrder()" id="orderButton" style="display: none;"  >passer commande</button></a>
+     
+    
+  </section>-->
+  </main>
+  
+      <footer>
+      </footer>
+      <script>
+        document.addEventListener('DOMContentLoaded', () => {
+      const hidenid = document.getElementById('hidenid').innerHTML;
+      const userId = hidenid ;
+       document.getElementById("hidenid").style.display = "none"
+      const userLinkhistory = document.getElementById('history');
+      userLinkhistory.href = `/history?userId=${encodeURIComponent(userId)}`;
+      const userLinkapropos = document.getElementById('accueil');
+      userLinkapropos.href = `/accueil?userId=${encodeURIComponent(userId)}`;
+      const userLinkpanier = document.getElementById('panier');
+      userLinkpanier.href = `/panier?userId=${encodeURIComponent(userId)}`;
+    });
+        </script>
+        <script>
+          document.addEventListener('DOMContentLoaded', () => {
+              const forms = document.querySelectorAll('.add-to-cart-form');
+          
+              forms.forEach(form => {
+                  form.addEventListener('submit', async (event) => {
+                      event.preventDefault(); // Empêche le formulaire de se soumettre de manière classique
+                      const hidenid = document.getElementById('hidenid').innerHTML;
+      const userId = hidenid ;
+                      const productId = form.getAttribute('data-product-id');
+                      const productPrice = form.getAttribute('data-product-price');
+                      const quantityInput = form.querySelector('input[name="quantity"]');
+                      const quantity = quantityInput.value;
+                      const statusMessage = document.getElementById(`status-${productId}`);
+          
+                      try {
+                          const response = await fetch(`/panier?userId=${encodeURIComponent(userId)}&id=${encodeURIComponent(productId)}`, {
+                              method: 'POST',
+                              headers: {
+                                  'Content-Type': 'application/json',
+                                  //'Authorization': `Bearer ${localStorage.getItem('token')}` // Inclure le token d'authentification si nécessaire
+                              },
+                              body: JSON.stringify({ quantity, price: productPrice })
+                          });
+          
+                          if (!response.ok) throw new Error('Erreur lors de l\'ajout au panier');
+          
+                          statusMessage.textContent = 'Produit ajouté au panier!';
+                          statusMessage.style.color = 'green';
+          
+                          // Optionnel : Vous pouvez mettre à jour la vue du panier ici
+          
+                      } catch (error) {
+                          statusMessage.textContent = 'Échec de l\'ajout au panier.';
+                          statusMessage.style.color = 'red';
+                      }
+                  });
+              });
+          });</script>
+   <!-- <script src="./script.js"></script> -->
+    
+</body>
+</html>
