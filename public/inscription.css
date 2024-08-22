@@ -47,7 +47,7 @@
 .boxe-login input[type="password"],
 .boxe-login input[type="text"],
 .boxe-login input[type="number"] {
-    width: 100%;
+    width: 94.5%;
     padding: 10px;
     font-size: 16px;
     border: 1px solid #ccc;
@@ -88,10 +88,18 @@
 @media (max-width: 480px) {
     .boxe-login {
         padding: 20px;
-        max-width: 80%;
+        margin: 10%;
     }
 
     .boxe-login h1 {
         font-size: 20px;
     }
+    /* Champs de saisie */
+.boxe-login input[type="email"],
+.boxe-login input[type="password"],
+.boxe-login input[type="text"],
+.boxe-login input[type="number"] {
+    width: 90%;
+    padding: 5px;
+}
 }
